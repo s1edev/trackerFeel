@@ -6,7 +6,7 @@ from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.exceptions import TelegramBadRequest
 
-from config import CHANNEL_ID
+from config import CHANNEL_ID, CHANNEL_USERNAME
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ async def is_subscribed(user_id: int, bot) -> bool:
     """Проверяет, подписан ли пользователь на канал"""
     if not CHANNEL_ID:
         return True  # Если канал не настроен, считаем что подписан
-    
+
     try:
         member = await bot.get_chat_member(CHANNEL_ID, user_id)
         return member.status in ["member", "administrator", "creator"]
@@ -34,8 +34,11 @@ async def is_subscribed(user_id: int, bot) -> bool:
 
 def get_subscribe_keyboard() -> InlineKeyboardMarkup:
     """Клавиатура с кнопкой подписки"""
-    channel_link = f"https://t.me/{CHANNEL_ID.replace('@', '')}" if CHANNEL_ID else "#"
-    keyboard = [[InlineKeyboardButton(text="📢 Подписаться на канал", url=channel_link)]]
+    channel_link = f"https://t.me/{CHANNEL_USERNAME}" if CHANNEL_USERNAME else "#"
+    keyboard = [
+        [InlineKeyboardButton(text="📢 Подписаться на канал", url=channel_link)],
+        [InlineKeyboardButton(text="✅ Я подписался", callback_data="check_subscription")]
+    ]
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 

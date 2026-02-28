@@ -5,6 +5,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from config import BOT_TOKEN
 from database import Base, engine
 from scheduler import scheduler
+from middleware.subscription import SubscriptionMiddleware
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,6 +32,13 @@ def register_handlers():
     dp.include_router(admin_router)
 
 
+def register_middleware():
+    """Регистрация middleware для проверки подписки"""
+    dp.message.middleware(SubscriptionMiddleware())
+    dp.callback_query.middleware(SubscriptionMiddleware())
+    logger.info("Subscription middleware registered")
+
+
 async def on_startup():
     logger.info("Creating database tables...")
     Base.metadata.create_all(bind=engine)
@@ -50,6 +58,7 @@ async def on_shutdown():
 
 def main():
     register_handlers()
+    register_middleware()
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
     logger.info("Starting bot in polling mode...")

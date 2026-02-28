@@ -13,3 +13,4 @@ MOOD_CHECK_TIME = os.getenv("MOOD_CHECK_TIME", "20:30")
 
 # Канал для обязательной подписки
 CHANNEL_ID = os.getenv("CHANNEL_ID")  # ID канала (начинается с @ или -100...)
+CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")  # Username канала для ссылки (без @)
