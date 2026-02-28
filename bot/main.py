@@ -22,11 +22,13 @@ def register_handlers():
     from handlers.mood import router as mood_router
     from handlers.graph import router as graph_router
     from handlers.day import router as day_router
+    from handlers.admin import router as admin_router
 
     dp.include_router(start_router)
     dp.include_router(mood_router)
     dp.include_router(graph_router)
     dp.include_router(day_router)
+    dp.include_router(admin_router)
 
 
 async def on_startup():

@@ -10,3 +10,6 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./mood_tracker.db")
 
 TIMEZONE = os.getenv("TIMEZONE", "Asia/Yekaterinburg")
 MOOD_CHECK_TIME = os.getenv("MOOD_CHECK_TIME", "20:30")
+
+# Канал для обязательной подписки
+CHANNEL_ID = os.getenv("CHANNEL_ID")  # ID канала (начинается с @ или -100...)
