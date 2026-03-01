@@ -6,7 +6,7 @@ from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.exceptions import TelegramBadRequest
 
-from config import CHANNEL_ID, CHANNEL_USERNAME
+from config import CHANNEL_ID, CHANNEL_USERNAME, DATABASE_PATH
 
 logger = logging.getLogger(__name__)
 
@@ -55,8 +55,7 @@ async def cmd_download_db(message: types.Message):
         )
         return
 
-    db_path = os.path.join(os.path.dirname(__file__), "..", "mood_tracker.db")
-    db_path = os.path.abspath(db_path)
+    db_path = os.path.abspath(DATABASE_PATH)
 
     if not os.path.exists(db_path):
         await message.answer(f"❌ База данных не найдена\nПуть: {db_path}")
@@ -121,8 +120,7 @@ async def process_db_upload(message: types.Message, document):
 
     await message.answer("📥 Загружаю базу данных...")
 
-    db_path = os.path.join(os.path.dirname(__file__), "..", "mood_tracker.db")
-    db_path = os.path.abspath(db_path)
+    db_path = os.path.abspath(DATABASE_PATH)
     backup_path = f"{db_path}.backup"
 
     logger.info(f"Database path: {db_path}")
