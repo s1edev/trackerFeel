@@ -6,7 +6,10 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./mood_tracker.db")
+# Use absolute path for database
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATABASE_PATH = os.getenv("DATABASE_PATH", os.path.join(BASE_DIR, "mood_tracker.db"))
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DATABASE_PATH}")
 
 TIMEZONE = os.getenv("TIMEZONE", "Asia/Yekaterinburg")
 MOOD_CHECK_TIME = os.getenv("MOOD_CHECK_TIME", "20:30")
